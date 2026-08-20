@@ -16,7 +16,7 @@ async def handle_photo(message: Message):
 
     file = await bot.get_file(photo.file_id)
     file_bytes = await bot.download_file(file.file_path)
-
+    
     async with httpx.AsyncClient() as client:
         try:
             response = await client.post(

@@ -5,7 +5,8 @@ from worker.model.model import ConvNet
 from torchvision import transforms
 import io
 
-best_weights_path = os.path.join("weights", "best_model.pth")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+best_weights_path = os.path.join(BASE_DIR, "weights", "best_model.pth")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 if not os.path.exists(best_weights_path):

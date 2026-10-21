@@ -3,8 +3,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 
-from worker.model.settings import device
-
 
 class ConvNet(nn.Module):
     def __init__(self, num_classes=3):
@@ -29,6 +27,7 @@ class ConvNet(nn.Module):
 
 
 def evaluate(model, data_loader, loss_fn):
+    device = next(model.parameters()).device
     losses = []
     num_current = 0
     num_elements = 0

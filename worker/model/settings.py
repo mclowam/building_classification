@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from torchvision import transforms, datasets
 import torch
 
@@ -10,12 +12,14 @@ transform = transforms.Compose([
     transforms.ToTensor()
 ])
 
-full_data = datasets.ImageFolder(root='./data', transform=transform)
+full_data = datasets.ImageFolder(root=Path(__file__).resolve().parent / 'data', transform=transform)
 
 train_size = int(len(full_data) * 0.8)
 val_size = len(full_data) - train_size
 
-train_data, val_data = torch.utils.data.random_split(full_data, [train_size, val_size])
+train_data, val_data = torch.utils.data.random_split(
+    full_data, [train_size, val_size], generator=torch.Generator().manual_seed(42)
+)
 
 train_loader = torch.utils.data.DataLoader(train_data, batch_size=8, shuffle=True)
 val_loader = torch.utils.data.DataLoader(val_data, batch_size=8, shuffle=False)

@@ -1,10 +1,14 @@
 import asyncio
+import os
 import httpx
 from aiogram import Bot, Dispatcher, F
 from aiogram.types import Message
+from dotenv import load_dotenv
 
-BOT_TOKEN = "8950840622:AAGbAWqsWdwwz5CNSXGXl0VWf5uFHbTwnIQ"
-WORKER_URL = "http://localhost:8001/predict"
+load_dotenv()
+
+BOT_TOKEN = os.environ["BOT_TOKEN"]
+WORKER_URL = os.getenv("WORKER_URL", "http://localhost:8001/predict")
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()

@@ -13,7 +13,7 @@ if not os.path.exists(best_weights_path):
     raise FileNotFoundError(f"Файла весов нет: {best_weights_path}")
 
 try:
-    best_weights = torch.load(best_weights_path, map_location=device)
+    best_weights = torch.load(best_weights_path, map_location=device, weights_only=True)
 except RuntimeError as e:
     raise RuntimeError(f"Не удалось загрузить веса: {e}")
 
@@ -33,7 +33,8 @@ transform = transforms.Compose([
 
 
 def inference_predict_style(image_bytes: bytes) -> dict:
-    image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+    with Image.open(io.BytesIO(image_bytes)) as source:
+        image = source.convert("RGB")
     tensor = transform(image)
     tensor = tensor.unsqueeze(0).to(device)
 

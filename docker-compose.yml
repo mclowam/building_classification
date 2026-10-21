@@ -6,6 +6,5 @@ services:
     ports:
       - "8001:8001"
     volumes:
-      - ./worker/model/weights:/app/worker/model/weights
-      - ./worker/model/data:/app/data
+      - ./worker/model/weights:/app/worker/model/weights:ro
     restart: unless-stopped
